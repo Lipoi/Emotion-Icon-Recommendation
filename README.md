@@ -13,3 +13,5 @@
 推荐阅读机器学习十大经典算法：https://blog.csdn.net/qq_42379006/article/details/80741808
 
 4. 预测
+
+Github Desktop: https://desktop.github.com/
