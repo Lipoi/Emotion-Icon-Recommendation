@@ -5,7 +5,7 @@ async def main():
     # 存储评论
     comments = []
     pure_com = []
-    pattern = re.compile(r'[(.*)]')
+    pattern = re.compile(r'\[(.*?)\]')
     # 页码
     page = 1
     # 当前已获取数量
@@ -27,11 +27,10 @@ async def main():
     # 打印评论
     for cmt in comments:
         com = cmt['content']['message']
-        if len(com) < 100 and '[' in com:
+        if len(com) < 200 and len(pattern.findall(com)) != 0:
             pure_com.append(com)
-    print(pure_com)
+        #print(pattern.findall(com))
     # 打印评论总数
-
-
+    print(pure_com)
 
 sync(main())
