@@ -10,7 +10,8 @@ def bv2av(bvid):
     if int(lst[2][1:-1]) != 0: return "视频不存在！"
     return int(lst[16][1:-1])
 
-BV = "BV1Mk4y1C7nV"
+BV = "BV1ab4y1k7A1"
+
 AV = bv2av(BV)
 coll = {}
 
@@ -20,4 +21,6 @@ for i in data["data"]['replies']:
     coll[i['member']["uname"]] = i["content"]["message"]
 comments = []
 for value in coll.values():
-    comments.append(value)
+    if len(value) < 100:
+        comments.append(value)
+print(comments)
