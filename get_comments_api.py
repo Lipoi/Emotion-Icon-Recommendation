@@ -3,6 +3,8 @@ import re
 import codecs
 import requests
 import numpy as np
+
+import pandas as pd
 # import pprint
 
 def bv2av(bvid):
@@ -14,7 +16,9 @@ async def main(bvid):
     # 存储评论
     comments = []
     pure_com = []
-    pattern = re.compile(r'\[(.*?)\]')
+    icon = []
+    pat2 = re.compile(r'\[(.*?)\]')
+    pat1 = re.compile(r'[^\[]+?\[')
     # 页码
     page = 1
     # 当前已获取数量
@@ -36,11 +40,13 @@ async def main(bvid):
     # 打印评论
     for cmt in comments:
         com = cmt['content']['message']
-        if len(com) < 200 and len(pattern.findall(com)) != 0:
-            pure_com.append(com)
+        if len(com) < 200 and com[0] != '[' and len(pat1.findall(com)) > 1:
+            pure_com.append(re.search(pat1, com).group())
+            icon.append(re.search(pat2, com).group())
         #print(pattern.findall(com))
+    df = pd.DataFrame({'comments':pure_com,'icon':icon})
+    df.to_csv(r"test.csv",sep=',')
     # 打印评论总数
-    return pure_com
 '''
 def get_com():
     comment = sync(main())
@@ -48,3 +54,4 @@ def get_com():
 '''
 #comment = sync(main())
 #np.savetxt('data.txt', comment, fmt="%s", encoding='utf-8') #保存为整数
+sync(main("BV1aK4y1P7Cg"))
