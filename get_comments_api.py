@@ -41,7 +41,7 @@ async def main(bvid):
     for cmt in comments:
         com = cmt['content']['message']
         if len(com) < 200 and com[0] != '[' and len(pat1.findall(com)) > 1:
-            pure_com.append(re.search(pat1, com).group())
+            pure_com.append(re.search(pat1, com).group().replace("[", ""))
             icon.append(re.search(pat2, com).group())
         #print(pattern.findall(com))
     df = pd.DataFrame({'comments':pure_com,'icon':icon})
